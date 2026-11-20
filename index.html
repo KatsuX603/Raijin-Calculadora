@@ -1,721 +1,147 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AfterLife • Calculadora RP</title>
-    <!-- Tailwind CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      /* Tema Tailwind com vibe shadcn */
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: [
-                "Inter",
-                "ui-sans-serif",
-                "system-ui",
-                "Segoe UI",
-                "Roboto",
-              ],
-            },
-            colors: {
-              tg: {
-                bg: "#0B0B0D",
-                panel: "#121216",
-                card: "#17171C",
-                soft: "#23232A",
-                ring: "#2B2B33",
-                red: "#ff0000",
-                text: "#E8E8F0",
-                dim: "#ff0000",
-                green: "#ff0000",
-              },
-            },
-            boxShadow: {
-              card: "0 10px 30px rgba(0,0,0,.45)",
-              ring: "inset 0 0 0 1px #2B2B33",
-              glow: "0 0 0 8px rgba(212,25,32,.12)",
-            },
-            borderRadius: {
-              xl2: "1.25rem",
-            },
-          },
-        },
-      };
-    </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      /* micro detalhes */
-      .card {
-        box-shadow: var(--tw-shadow), var(--tw-ring-offset-shadow, 0 0 #0000),
-          var(--tw-ring-shadow, 0 0 #0000);
-      }
-      .switch input:checked + span {
-        background: #ff0000;
-      }
-      .switch input:checked + span::after {
-        transform: translateX(20px);
-      }
-      .switch span::after {
-        content: "";
-        position: absolute;
-        width: 18px;
-        height: 18px;
-        background: white;
-        border-radius: 9999px;
-        left: 2px;
-        top: 2px;
-        transition: transform 0.25s;
-      }
-      .scroll-smooth {
-        scroll-behavior: smooth;
-      }
-      .btn {
-        transition: all 0.2s;
-      }
-      .btn:active {
-        transform: translateY(1px);
-      }
-      .input {
-        background: #121216;
-        border: 1px solid #2b2b33;
-      }
-      .input:focus {
-        outline: none;
-        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
-        border-color: #3b82f6;
-      }
-    </style>
-  </head>
-  <body class="bg-tg-bg text-tg-text min-h-screen scroll-smooth">
-    <header
-      class="sticky top-0 z-40 border-b border-tg.ring/40 bg-gradient-to-b from-tg-panel/95 to-tg-panel/60 backdrop-blur"
-    >
-      <div
-        class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between"
-      >
-        <h1 class="text-2xl font-extrabold tracking-tight">
-          AfterLife • Calculadora RP
-        </h1>
-        <div class="flex items-center gap-2">
-          <button
-            id="btnReset"
-            class="btn px-4 py-2 rounded-lg bg-tg.soft hover:bg-tg.ring text-sm"
-          >
-            Limpar
-          </button>
-          <button
-            id="btnShare"
-            class="btn px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-sm"
-          >
-            Copiar resumo
-          </button>
-        </div>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAIJIN • Central de Orçamentos</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap');
+:root{--bg:#090b10;--panel:#11151d;--card:#171d27;--line:#273140;--muted:#8995a7;--text:#edf2f8;--accent:#a855f7;--accent2:#d8b4fe;--danger:#ff6b6b;--shadow:0 18px 50px #0008}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 12% -10%,#2b1740 0,transparent 34%),radial-gradient(ellipse at 100% 0,#211637 0,transparent 30%),var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif;min-height:100vh}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.topbar{position:sticky;top:0;z-index:10;background:#090b10eF;backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.top-inner{max-width:1280px;margin:auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:13px}.mark{width:42px;height:42px;border:1px solid #a855f788;background:#a855f712;color:var(--accent);display:grid;place-items:center;border-radius:12px;font-size:23px;font-weight:900;box-shadow:0 0 28px #a855f730}
+.brand-name{font:900 27px 'Barlow Condensed',sans-serif;letter-spacing:3px}.brand-sub{font-size:10px;letter-spacing:2.1px;color:var(--muted);margin-top:2px}
+.header-actions{display:flex;gap:9px}.btn{border:1px solid var(--line);background:#ffffff08;color:var(--text);padding:10px 14px;border-radius:10px;font-size:12px;font-weight:700;transition:.18s}.btn:hover{border-color:#a855f788;background:#a855f712}.btn.primary{background:var(--accent);border-color:var(--accent);color:#170d20}.btn.primary:hover{background:var(--accent2)}
+main{max-width:1280px;margin:0 auto;padding:34px 24px 60px}.hero{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:25px}.eyebrow{color:var(--accent);font-size:10px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase}.hero h1{font:800 clamp(34px,5vw,52px)/.98 'Barlow Condensed',sans-serif;letter-spacing:1px;margin:8px 0}.hero p{color:var(--muted);font-size:13px;margin:10px 0 0;max-width:600px;line-height:1.6}
+.tabs{display:flex;gap:8px;background:#0d1118;border:1px solid var(--line);padding:6px;border-radius:13px;width:max-content;margin-bottom:22px}.tab{border:0;background:transparent;color:var(--muted);padding:11px 18px;border-radius:9px;font-size:12px;font-weight:800;letter-spacing:.4px}.tab.active{background:var(--accent);color:#170d20;box-shadow:0 4px 18px #a855f722}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 350px;gap:20px;align-items:start}.content{min-width:0}.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 13px}.section-head h2{font:700 22px 'Barlow Condensed',sans-serif;letter-spacing:.5px;margin:0}.section-head span{font-size:11px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.item-card{background:linear-gradient(145deg,#171e28,#11161e);border:1px solid var(--line);border-radius:14px;padding:16px;min-width:0;transition:.18s}.item-card:hover{border-color:#a855f755;transform:translateY(-1px)}.item-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.item-name{font-size:13px;font-weight:800;letter-spacing:.3px}.item-kicker{font-size:10px;color:var(--muted);margin-top:5px}.item-price{font:700 18px 'Barlow Condensed',sans-serif;color:var(--accent);white-space:nowrap}.field-label{display:block;font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin:15px 0 7px}
+select,.qty-input,.search{width:100%;background:#0b1017;color:var(--text);border:1px solid #303b4b;border-radius:9px;padding:10px 11px;outline:none}select:focus,.qty-input:focus,.search:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px #a855f718}
+.fabrication-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.fabrication-card{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#141a23;border:1px solid var(--line);border-radius:12px;padding:13px}.fabrication-card .item-name{font-size:12px}.fabrication-card .item-kicker{margin-top:4px}.qty-control{display:flex;align-items:center;gap:6px;flex-shrink:0}.qty-control button{width:28px;height:28px;border-radius:8px;border:1px solid var(--line);background:#ffffff08;color:var(--text);font-weight:800}.qty-control button:hover{border-color:var(--accent);color:var(--accent)}.qty-input{width:43px;padding:6px 3px;text-align:center;font-size:12px}
+.partner-box{display:flex;align-items:center;justify-content:space-between;gap:15px;background:#17111f;border:1px solid #4c3268;border-radius:12px;padding:13px 15px;margin-bottom:15px}.partner-box strong{font-size:12px}.partner-box small{display:block;color:var(--muted);font-size:10px;margin-top:4px}.switch{position:relative;width:43px;height:24px;flex-shrink:0}.switch input{opacity:0;width:0;height:0}.slider{position:absolute;inset:0;background:#394454;border-radius:30px;transition:.2s}.slider:before{content:"";position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}.switch input:checked+.slider{background:var(--accent)}.switch input:checked+.slider:before{transform:translateX(19px);background:#170d20}
+.summary{position:sticky;top:96px;background:linear-gradient(160deg,#171e28,#10151d);border:1px solid var(--line);border-radius:16px;padding:19px;box-shadow:var(--shadow)}.summary-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.summary-title h2{font:700 23px 'Barlow Condensed',sans-serif;margin:0}.count{font-size:10px;color:var(--accent);background:#a855f714;border:1px solid #a855f744;padding:5px 8px;border-radius:20px}
+.items-list{display:grid;gap:8px;max-height:310px;overflow:auto;padding-right:3px}.empty{font-size:12px;color:var(--muted);text-align:center;padding:25px 10px;border:1px dashed #344052;border-radius:10px}.summary-row{display:flex;justify-content:space-between;gap:12px;padding:9px 10px;background:#0d1219;border:1px solid #222c39;border-radius:9px;font-size:11px}.summary-row span:first-child{color:#c6cfdb}.summary-row b{white-space:nowrap}.totals{border-top:1px solid var(--line);margin-top:15px;padding-top:13px;display:grid;gap:9px}.total-line{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}.total-line strong{color:var(--text)}.grand{display:flex;justify-content:space-between;align-items:end;margin-top:4px}.grand span{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:1px}.grand strong{font:800 31px 'Barlow Condensed',sans-serif;color:var(--accent)}
+textarea{width:100%;resize:vertical;min-height:65px;background:#0b1017;color:var(--text);border:1px solid #303b4b;border-radius:9px;padding:10px;font-size:11px;outline:none}.summary-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.summary-actions .primary{grid-column:1/-1;padding:12px}
+.note{font-size:10px;color:var(--muted);line-height:1.5;margin-top:14px}.hidden{display:none!important}.footer{text-align:center;color:#586476;font-size:10px;letter-spacing:1px;padding:0 20px 25px}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--accent);color:#170d20;padding:11px 17px;border-radius:10px;font-size:12px;font-weight:800;box-shadow:var(--shadow);z-index:30}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.summary{position:static}.hero{align-items:flex-start;flex-direction:column}.summary{order:2}}
+@media(max-width:600px){.top-inner{padding:13px 15px}.brand-name{font-size:23px}.header-actions .btn{padding:9px;font-size:10px}main{padding:25px 14px 40px}.grid,.fabrication-grid{grid-template-columns:1fr}.tabs{width:100%}.tab{flex:1;padding:11px 8px}.hero h1{font-size:39px}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="top-inner">
+  <div class="brand"><div class="mark">雷</div><div><div class="brand-name">RAIJIN</div><div class="brand-sub">PERFORMANCE • CUSTOM GARAGE</div></div></div>
+  <div class="header-actions"><button class="btn" id="resetBtn">Limpar seleção</button><button class="btn" id="copyBtn">Copiar resumo</button></div>
+</div></header>
+<main>
+  <div class="hero"><div><div class="eyebrow">Central de serviços</div><h1>ORÇAMENTO <span style="color:var(--accent)">RAIJIN</span></h1><p>Monte seu orçamento de forma rápida. Selecione modificações ou itens e acompanhe o valor atualizado em tempo real.</p></div></div>
+  <nav class="tabs" aria-label="Categorias"><button class="tab active" data-tab="mods">Modificações</button><button class="tab" data-tab="fabrication">Itens e Reparos</button></nav>
+  <div class="layout">
+    <section class="content">
+      <div id="modsPanel">
+        <div class="section-head"><h2>MODIFICAÇÕES DE PERFORMANCE</h2><span>Selecione o estágio desejado</span></div>
+        <div class="grid" id="modsGrid"></div>
+        <p class="note">Os valores de modificações seguem a tabela informada. O Turbo possui valor único, sem seleção de estágio.</p>
       </div>
-    </header>
-
-    <main
-      class="max-w-6xl mx-auto px-4 py-8 grid gap-6 md:grid-cols-[1fr,380px]"
-    >
-      <!-- Painel opções -->
-      <section
-        class="card rounded-xl2 bg-tg-card shadow-card ring-1 ring-tg-ring p-5 md:p-6"
-      >
-        <div class="flex flex-wrap gap-4 items-end">
-          <div class="grow">
-            <label class="block text-sm text-tg-dim mb-1"
-              >Cliente parceiro</label
-            >
-            <label
-              class="switch relative inline-flex items-center cursor-pointer select-none"
-            >
-              <input id="isPartner" type="checkbox" class="sr-only" />
-              <span
-                class="w-10 h-6 rounded-full bg-gray-600 transition relative"
-              ></span>
-            </label>
-            <span class="ml-3 text-sm">Desconto de 20% no valor final</span>
-          </div>
-          <div>
-            <label for="kmExterno" class="block text-sm text-tg-dim mb-1"
-              >KM rodado para atendimento externo</label
-            >
-            <div class="flex items-center gap-2">
-              <input
-                id="kmExterno"
-                type="number"
-                min="0"
-                step="0.1"
-                value="0"
-                class="input rounded-lg px-3 py-2 w-36 text-right"
-              />
-              <span class="text-sm text-tg-dim">km</span>
-            </div>
-            <p class="text-xs text-tg-dim mt-1">R$ 1.000 por km</p>
-          </div>
-        </div>
-
-        <!-- Categorias -->
-        <div id="categories" class="mt-6 grid gap-5"></div>
-      </section>
-
-      <!-- Resumo -->
-      <aside
-        class="card rounded-xl2 bg-tg-card shadow-card ring-1 ring-tg-ring p-5 md:p-6 h-fit sticky top-20"
-      >
-        <h2 class="text-lg font-bold mb-4">Resumo e total</h2>
-
-        <div
-          id="itemsList"
-          class="space-y-3 max-h-[420px] overflow-auto pr-1"
-        ></div>
-
-        <div class="border-t border-tg-ring mt-4 pt-4 space-y-2 text-sm">
-          <div class="flex justify-between">
-            <span>Subtotal</span><span id="subtotal">R$ 0,00</span>
-          </div>
-          <div class="flex justify-between">
-            <span>Descontos</span><span id="discounts">R$ 0,00</span>
-          </div>
-          <div class="flex justify-between">
-            <span>Atendimento externo</span><span id="extCost">R$ 0,00</span>
-          </div>
-          <!-- Impostos/Taxas removidos conforme solicitação -->
-          <div
-            class="flex justify-between items-center text-2xl font-extrabold mt-1"
-          >
-            <span>Total</span
-            ><span id="grandTotal" class="text-tg-green">R$ 0,00</span>
-          </div>
-        </div>
-
-        <div class="mt-5">
-          <label class="block text-sm text-tg-dim mb-1">Observações</label>
-          <textarea
-            id="notes"
-            rows="3"
-            class="input rounded-lg w-full px-3 py-2"
-            placeholder="Ex.: veículo capotado, uso de elevador para desvirar, cliente solicitou neon..."
-          ></textarea>
-        </div>
-
-        <button
-          id="btnCopyInvoice"
-          class="btn w-full mt-4 px-4 py-3 rounded-lg bg-tg-red hover:brightness-110 font-semibold tracking-wide"
-        >
-          Copiar orçamento detalhado
-        </button>
-      </aside>
-    </main>
-
-    <footer
-      class="max-w-6xl mx-auto px-4 pb-10 text-center text-xs text-tg-dim"
-    >
-      AfterLife &copy; 2026
-    </footer>
-
-    <script>
-      /* =========================================================
-       CONFIGURAÇÃO • fácil de editar e expandir
-       - type: "toggle" para ligar/desligar
-       - type: "qty" para quantidade
-       - price: valor unitário em BRL
-       - max: limite de venda quando aplicável
-       - groupId: agrupa itens que compartilham o mesmo limite
-    ========================================================== */
-      const CONFIG = {
-        categories: [
-          {
-            id: "reparos",
-            title: "Reparos e Itens de Oficina",
-            items: [
-              {
-                id: "reparo_interno",
-                label: "Reparo",
-                type: "toggle",
-                price: 4500,
-              },
-              {
-                id: "kit_basico",
-                label: "Kit reparo básico",
-                type: "qty",
-                price: 2500,
-                groupId: "kits",
-              },
-              {
-                id: "kit_avancado",
-                label: "Kit reparo avançado",
-                type: "qty",
-                price: 5000,
-                groupId: "kits",
-              },
-              {
-                id: "chave_inglesa",
-                label: "Chave inglesa",
-                type: "qty",
-                price: 2500,
-              },
-              {
-                id: "elevador_hidraulico",
-                label: "Macaco hidráulico",
-                type: "toggle",
-                price: 7000,
-              },
-              { 
-                id: "pneu", 
-                label: "Pneu", 
-                type: "qty", 
-                price: 500,
-              },
-              {
-                id: "exaustor",
-                label: "Kit Exaustor",
-                type: "qty",
-                price: 20000,
-              },
-              {
-                id: "nitro",
-                label: "Kit Nitro",
-                type: "qty",
-                price: 35000,
-              },
-              {
-                id: "cnitro",
-                label: "Cilindro Nitro",
-                type: "qty",
-                price: 7000,
-              },
-            ],
-          },
-        ],
-        // preço por quilômetro do atendimento externo
-        externoEnabled: true, // <-- desativa atendimento externo sem excluir
-        externoKmPrice: 1000,
-        // desconto para parceiros
-        partnerDiscount: 0.2,
-        // espaço para taxas adicionais se quiser no futuro
-        feesPercent: 0,
-      };
-
-      /* =========================================================
-       UTIL
-    ========================================================== */
-      const BRL = new Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      });
-      const $ = (sel, el = document) => el.querySelector(sel);
-      const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
-
-      /* =========================================================
-       RENDERIZAÇÃO DAS CATEGORIAS
-    ========================================================== */
-      const catWrap = document.getElementById("categories");
-
-      function renderCategories() {
-        catWrap.innerHTML = "";
-        CONFIG.categories.forEach((cat) => {
-          const card = document.createElement("div");
-          card.className =
-            "rounded-xl2 bg-tg-panel ring-1 ring-tg-ring p-4 md:p-5";
-
-          const head = `
-          <div class="flex items-start justify-between gap-3">
-            <div>
-              <h3 class="text-base md:text-lg font-semibold">${cat.title}</h3>
-              ${
-                cat.help
-                  ? `<p class="text-xs text-tg-dim mt-1">${cat.help}</p>`
-                  : ""
-              }
-            </div>
-          </div>
-        `;
-
-          const gridCls = cat.twoCols
-            ? "grid md:grid-cols-2 gap-4 mt-4"
-            : "grid gap-4 mt-4";
-          const list = document.createElement("div");
-          list.className = gridCls;
-
-          cat.items.forEach((item) => {
-            const row = document.createElement("div");
-            row.className =
-              "flex items-center justify-between gap-3 rounded-lg bg-tg.soft ring-1 ring-tg-ring px-3 py-3";
-            row.dataset.itemId = item.id;
-            let control = "";
-
-            if (item.type === "toggle") {
-              control = `
-              <label class="switch relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" data-type="toggle" class="sr-only" />
-                <span class="w-10 h-6 rounded-full bg-gray-600 transition relative"></span>
-              </label>
-            `;
-            } else {
-              control = `
-              <div class="flex items-center gap-2">
-                <button type="button" class="dec px-2 py-1 rounded bg-white/5 hover:bg-white/10 text-sm">−</button>
-                <input type="number" min="0" step="1" value="0" class="qty input rounded w-16 px-2 py-1 text-right" data-type="qty" />
-                <button type="button" class="inc px-2 py-1 rounded bg-white/5 hover:bg-white/10 text-sm">+</button>
-              </div>
-            `;
-            }
-
-            row.innerHTML = `
-            <div class="min-w-0">
-              <div class="font-medium leading-tight">${item.label}</div>
-              <div class="text-xs text-tg-dim">${BRL.format(item.price)}${
-              item.max ? ` • limite ${item.max}` : ""
-            }</div>
-            </div>
-            <div class="shrink-0 flex items-center gap-3">
-              ${control}
-            </div>
-          `;
-
-            list.appendChild(row);
-          });
-
-          card.innerHTML = head;
-          card.appendChild(list);
-          catWrap.appendChild(card);
-        });
-      }
-
-      renderCategories();
-
-      // Desativa visualmente e funcionalmente o campo de KM externo quando configurado
-      if (!CONFIG.externoEnabled) {
-        const kmInput = $("#kmExterno");
-        if (kmInput) {
-          kmInput.disabled = true;
-          kmInput.classList.add("opacity-50", "cursor-not-allowed");
-          const parent = kmInput.closest("div");
-          if (parent) {
-            const note = document.createElement("div");
-            note.className = "text-xs text-tg-dim mt-1";
-            note.textContent = "Atendimento externo desativado";
-            // removemos o texto do preço para não confundir
-            const price = parent.querySelector("p");
-            if (price) price.style.opacity = "0.5";
-            parent.appendChild(note);
-          }
-        }
-      }
-
-      /* =========================================================
-       ESTADO
-    ========================================================== */
-      const state = {
-        isPartner: false,
-        km: 0,
-        selections: {}, // id -> qty
-      };
-
-      /* =========================================================
-       VINCULA EVENTOS
-    ========================================================== */
-      // Parceiro
-      $("#isPartner").addEventListener("change", (e) => {
-        state.isPartner = e.target.checked;
-        calcAndRender();
-      });
-
-      // KM externo
-      $("#kmExterno").addEventListener("input", (e) => {
-        const v = parseFloat(e.target.value || "0");
-        state.km = Math.max(0, v);
-        calcAndRender();
-      });
-
-      // Clicks nos itens
-      $("#categories").addEventListener("click", (e) => {
-        const row = e.target.closest("[data-item-id]");
-        if (!row) return;
-        const itemId = row.dataset.itemId;
-        const item = findItem(itemId);
-        if (!item) return;
-
-        if (e.target.classList.contains("inc")) {
-          changeQty(item, 1, row);
-        } else if (e.target.classList.contains("dec")) {
-          changeQty(item, -1, row);
-        }
-      });
-
-      // Mudanças diretas no input number
-      $("#categories").addEventListener("input", (e) => {
-        const row = e.target.closest("[data-item-id]");
-        if (!row) return;
-        const itemId = row.dataset.itemId;
-        const item = findItem(itemId);
-        if (!item) return;
-
-        const type = e.target.dataset.type;
-        if (type === "qty") {
-          const val = Math.max(0, parseInt(e.target.value || "0", 10));
-          setQty(item, val, row);
-        }
-      });
-
-      // Toggle
-      $("#categories").addEventListener("change", (e) => {
-        const row = e.target.closest("[data-item-id]");
-        if (!row) return;
-        const itemId = row.dataset.itemId;
-        const item = findItem(itemId);
-        if (!item) return;
-
-        if (e.target.type === "checkbox") {
-          state.selections[itemId] = e.target.checked ? 1 : 0;
-          calcAndRender();
-        }
-      });
-
-      // Reset
-      $("#btnReset").addEventListener("click", () => {
-        $("#isPartner").checked = false;
-        state.isPartner = false;
-        $("#kmExterno").value = 0;
-        state.km = 0;
-        state.selections = {};
-        // zera todos os campos
-        $$("#categories [data-item-id]").forEach((row) => {
-          const cb = row.querySelector('input[type="checkbox"]');
-          if (cb) cb.checked = false;
-          const qty = row.querySelector("input.qty");
-          if (qty) qty.value = 0;
-        });
-        calcAndRender();
-      });
-
-      // Copiar resumo rápido
-      $("#btnShare").addEventListener("click", () =>
-        copyToClipboard(makeShortSummary())
-      );
-
-      // Copiar orçamento detalhado
-      $("#btnCopyInvoice").addEventListener("click", () =>
-        copyToClipboard(makeDetailedInvoice())
-      );
-
-      /* =========================================================
-       LÓGICA DE LIMITES E CÁLCULO
-    ========================================================== */
-      function findItem(id) {
-        for (const c of CONFIG.categories) {
-          const found = c.items.find((i) => i.id === id);
-          if (found) return found;
-        }
-        return null;
-      }
-
-      function getGroupTotal(groupId) {
-        if (!groupId) return 0;
-        let total = 0;
-        for (const id in state.selections) {
-          const item = findItem(id);
-          if (item && item.groupId === groupId)
-            total += state.selections[id] || 0;
-        }
-        return total;
-      }
-
-      function setQty(item, newQty, rowEl) {
-        // aplica limite do próprio item
-        if (item.max != null) newQty = Math.min(newQty, item.max);
-        // aplica limite por grupo combinado
-        if (item.groupId) {
-          const currentGroup =
-            getGroupTotal(item.groupId) - (state.selections[item.id] || 0);
-          const leftover = (item.max ?? Infinity) + (item.groupMax ?? 0); // item.max já limita por item
-          const groupLimit = 100; // regra do card: Kit = 3 unidades combinadas
-          const cap = Math.max(0, groupLimit - currentGroup);
-          newQty = Math.min(newQty, cap);
-        }
-
-        state.selections[item.id] = newQty;
-        const qtyInput = rowEl.querySelector("input.qty");
-        if (qtyInput) qtyInput.value = newQty;
-        calcAndRender();
-      }
-
-      function changeQty(item, delta, rowEl) {
-        const current = state.selections[item.id] || 0;
-        setQty(item, Math.max(0, current + delta), rowEl);
-      }
-
-      function calcAndRender() {
-        const items = [];
-        let subtotal = 0;
-
-        CONFIG.categories.forEach((cat) => {
-          cat.items.forEach((it) => {
-            const qty = state.selections[it.id] || 0;
-            if (it.type === "toggle" && qty === 1) {
-              items.push({
-                label: it.label,
-                qty: 1,
-                price: it.price,
-                total: it.price,
-              });
-              subtotal += it.price;
-            }
-            if (it.type === "qty" && qty > 0) {
-              const total = qty * it.price;
-              items.push({ label: it.label, qty, price: it.price, total });
-              subtotal += total;
-            }
-          });
-        });
-
-        // Atendimento externo (somente se habilitado)
-        const ext = CONFIG.externoEnabled
-          ? Math.max(0, state.km) * CONFIG.externoKmPrice
-          : 0;
-
-        // Desconto parceiro
-        const discount = state.isPartner
-          ? (subtotal + ext) * CONFIG.partnerDiscount
-          : 0;
-
-        // Sem cálculo de taxas (removido)
-        const grand = Math.max(0, subtotal + ext - discount);
-
-        renderItems(items);
-        $("#subtotal").textContent = BRL.format(subtotal);
-        $("#extCost").textContent = BRL.format(ext);
-        $("#discounts").textContent = BRL.format(discount);
-        $("#grandTotal").textContent = BRL.format(grand);
-      }
-
-      function renderItems(items) {
-        const wrap = document.getElementById("itemsList");
-        if (!items.length) {
-          wrap.innerHTML = `<p class="text-sm text-tg-dim">Nenhum item selecionado.</p>`;
-          return;
-        }
-        wrap.innerHTML = items
-          .map(
-            (i) => `
-        <div class="flex items-center justify-between gap-3 bg-tg.soft ring-1 ring-tg-ring rounded-lg px-3 py-2">
-          <div class="text-sm">
-            <div class="font-medium">${i.label}</div>
-            <div class="text-xs text-tg-dim">Qtd ${i.qty} • ${BRL.format(
-              i.price
-            )} un.</div>
-          </div>
-          <div class="text-sm font-semibold">${BRL.format(i.total)}</div>
-        </div>
-      `
-          )
-          .join("");
-      }
-
-      /* =========================================================
-       EXPORTAÇÃO DOS DADOS
-    ========================================================== */
-      function makeShortSummary() {
-        const total = $("#grandTotal").textContent;
-        const partner = state.isPartner ? "Sim" : "Não";
-        return [
-          `Orçamento AfterLife`,
-          `Parceiro: ${partner}`,
-          `KM externo: ${state.km || 0} km`,
-          `Total: ${total}`,
-        ].join("\n");
-      }
-
-      function makeDetailedInvoice() {
-        const lines = [];
-        lines.push("ORÇAMENTO • AfterLife");
-        lines.push("");
-
-        CONFIG.categories.forEach((cat) => {
-          const catLines = [];
-          cat.items.forEach((it) => {
-            const qty = state.selections[it.id] || 0;
-            if (
-              (it.type === "toggle" && qty) ||
-              (it.type === "qty" && qty > 0)
-            ) {
-              const total = it.type === "toggle" ? it.price : qty * it.price;
-              catLines.push(
-                `- ${it.label} ${
-                  it.type === "qty" ? `(x${qty})` : ""
-                } = ${BRL.format(total)}`
-              );
-            }
-          });
-          if (catLines.length) {
-            lines.push(cat.title.toUpperCase());
-            lines.push(...catLines);
-            lines.push("");
-          }
-        });
-
-        if (CONFIG.externoEnabled && state.km > 0) {
-          lines.push(
-            `ATENDIMENTO EXTERNO: ${state.km} km x ${BRL.format(
-              CONFIG.externoKmPrice
-            )} = ${BRL.format(state.km * CONFIG.externoKmPrice)}`
-          );
-          lines.push("");
-        }
-
-        const subtotal = $("#subtotal").textContent;
-        const ext = $("#extCost").textContent;
-        const discounts = $("#discounts").textContent;
-        const fees = $("#fees").textContent;
-        const total = $("#grandTotal").textContent;
-
-        lines.push(`SUBTOTAL: ${subtotal}`);
-        lines.push(`ATENDIMENTO EXTERNO: ${ext}`);
-        lines.push(`DESCONTOS: ${discounts}`);
-        if (CONFIG.feesPercent) lines.push(`TAXAS: ${fees}`);
-        lines.push(`TOTAL: ${total}`);
-        lines.push("");
-
-        const notes = $("#notes").value.trim();
-        if (notes) {
-          lines.push("OBSERVAÇÕES:");
-          lines.push(notes);
-        }
-
-        return lines.join("\n");
-      }
-
-      async function copyToClipboard(text) {
-        try {
-          await navigator.clipboard.writeText(text);
-          toast("Copiado para a área de transferência");
-        } catch {
-          alert("Não foi possível copiar. Selecione e copie manualmente.");
-        }
-      }
-
-      // mini toast
-      function toast(msg) {
-        const t = document.createElement("div");
-        t.textContent = msg;
-        t.className =
-          "fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/10 text-white px-4 py-2 rounded-lg ring-1 ring-tg-ring shadow-glow";
-        document.body.appendChild(t);
-        setTimeout(() => {
-          t.remove();
-        }, 1800);
-      }
-
-      // inicia
-      calcAndRender();
-    </script>
-  </body>
-</html>
+      <div id="fabricationPanel" class="hidden">
+        <div class="section-head"><h2>ITENS</h2><span>Defina as quantidades</span></div>
+        <div class="partner-box"><div><strong>Cliente com parceria</strong><small>Ative para aplicar os valores especiais da parceria nos itens fabricados.</small></div><label class="switch"><input type="checkbox" id="partnerToggle"><span class="slider"></span></label></div>
+        <div class="section-head"><h2>PEÇAS PRINCIPAIS</h2><span>Preço por unidade</span></div><div class="fabrication-grid" id="mainFabGrid"></div>
+        <div class="section-head" style="margin-top:24px"><h2>ACESSÓRIOS E EXTRAS</h2><span>Preço por unidade</span></div><div class="fabrication-grid" id="extraFabGrid"></div>
+        <p class="note">Os valores dos itens são alternados automaticamente conforme o status de parceria. Quantidades podem ser ajustadas pelos botões ou digitadas diretamente.</p>
+      </div>
+    </section>
+    <aside class="summary">
+      <div class="summary-title"><h2>RESUMO DO PEDIDO</h2><span class="count" id="itemCount">0 ITENS</span></div>
+      <div class="items-list" id="itemsList"><div class="empty">Nenhum item selecionado ainda.</div></div>
+      <div class="totals"><div class="total-line"><span>Subtotal</span><strong id="subtotal">$ 0</strong></div><div class="total-line" id="partnerLine"><span>Parceria</span><strong id="partnerStatus">Sem parceria</strong></div><div class="grand"><span>Total geral</span><strong id="grandTotal">$ 0</strong></div></div>
+      <label class="field-label" for="notes">Observações do orçamento</label><textarea id="notes" placeholder="Ex.: modelo do veículo, detalhes do serviço..."></textarea>
+      <div class="summary-actions"><button class="btn primary" id="invoiceBtn">Copiar orçamento detalhado</button><button class="btn" id="clearTabBtn">Limpar aba</button><button class="btn" id="copyTotalBtn">Copiar total</button></div>
+      <div class="note">Confira os itens e as quantidades antes de enviar o orçamento ao cliente.</div>
+    </aside>
+  </div>
+</main>
+<footer class="footer">RAIJIN PERFORMANCE GARAGE • SISTEMA DE ORÇAMENTOS</footer>
+<script>
+const money = n => '$ ' + Math.round(n).toLocaleString('pt-BR');
+const modData = [
+  {name:'Motor', prices:{'Stage 3':75000,'Stage 4':85000,'Stage 5':100000}},
+  {name:'Transmissão', prices:{'Stage 3':65000,'Stage 4':75000,'Stage 5':90000}},
+  {name:'Freio', prices:{'Stage 3':30000,'Stage 4':40000,'Stage 5':50000}},
+  {name:'Suspensão', prices:{'Stage 3':50000,'Stage 4':65000,'Stage 5':80000}},
+  {name:'Blindagem', prices:{'Stage 3':150000,'Stage 4':170000,'Stage 5':210000}},
+  {name:'Turbo', prices:{'Único':30000}}
+];
+const mainFab = [
+  {name:'Motor',partner:30000,regular:50000},{name:'Freio',partner:30000,regular:50000},
+  {name:'Transmissão',partner:30000,regular:50000},{name:'Suspensão',partner:30000,regular:50000}
+];
+const extraFab = [
+  {name:'Antilag',partner:20000,regular:30000},{name:'Kit Drift',partner:20000,regular:30000},
+  {name:'Livery',partner:5000,regular:10000},{name:'Longbook',partner:50000,regular:60000},
+  {name:'Neon RGB',partner:15000,regular:20000},{name:'Nitro',partner:10000,regular:15000},
+  {name:'Nitro Duplo',partner:18000,regular:25000},{name:'Pano',partner:3000,regular:5000},
+  {name:'Placa',partner:5000,regular:7000},{name:'Sprays',partner:5000,regular:8000},
+  {name:'Suspensão a Ar',partner:15000,regular:20000},{name:'Stancer',partner:20000,regular:30000},
+  {name:'Ticket',partner:3000,regular:5000},{name:'Tuner Chip',partner:25000,regular:30000},
+  {name:'Xenon RGB',partner:15000,regular:20000},{name:'Cinto Esportivo',partner:15000,regular:20000}
+];
+const modSelection = {};
+const fabSelection = {};
+let activeTab='mods', partner=false;
+const $=id=>document.getElementById(id);
+function renderMods(){
+  $('modsGrid').innerHTML=modData.map((item,i)=>{
+    const options=Object.entries(item.prices).map(([stage,price])=>`<option value="${stage}">${stage} — ${money(price)}</option>`).join('');
+    return `<article class="item-card"><div class="item-top"><div><div class="item-name">${item.name}</div><div class="item-kicker">${i===5?'Instalação de valor único':'Upgrade de performance'}</div></div><div class="item-price">${i===5?money(30000):'—'}</div></div><label class="field-label" for="mod-${i}">${i===5?'Selecionar item':'Estágio'}</label><select id="mod-${i}" data-mod="${i}"><option value="">Não selecionado</option>${options}</select></article>`;
+  }).join('');
+  $('modsGrid').querySelectorAll('select').forEach(s=>s.addEventListener('change',e=>{const i=+e.target.dataset.mod;modSelection[i]=e.target.value;updateSummary()}));
+}
+function renderFab(){
+  const draw=(arr,target,offset)=>$(target).innerHTML=arr.map((item,i)=>{
+    const index=offset+i, price=partner?item.partner:item.regular;
+    return `<article class="fabrication-card"><div><div class="item-name">${item.name}</div><div class="item-kicker">${money(price)} / un.</div></div><div class="qty-control"><button type="button" data-step="-1" data-index="${index}" aria-label="Diminuir ${item.name}">−</button><input class="qty-input" type="number" min="0" step="1" value="${fabSelection[index]||0}" data-qty="${index}" aria-label="Quantidade de ${item.name}"><button type="button" data-step="1" data-index="${index}" aria-label="Aumentar ${item.name}">+</button></div></article>`;
+  }).join('');
+  draw(mainFab,'mainFabGrid',0);draw(extraFab,'extraFabGrid',mainFab.length);
+}
+function getRows(){
+  if(activeTab==='mods')return modData.flatMap((it,i)=>{const stage=modSelection[i];if(!stage)return[];return[{name:it.name+' • '+stage,qty:1,unit:it.prices[stage],total:it.prices[stage]}]});
+  return [...mainFab,...extraFab].flatMap((it,i)=>{const qty=Math.max(0,Math.floor(Number(fabSelection[i]||0)));if(!qty)return[];const unit=partner?it.partner:it.regular;return[{name:it.name,qty,unit,total:qty*unit}]});
+}
+function updateSummary(){
+  const rows=getRows(),subtotal=rows.reduce((s,r)=>s+r.total,0),count=rows.reduce((s,r)=>s+r.qty,0);
+  $('itemsList').innerHTML=rows.length?rows.map(r=>`<div class="summary-row"><span>${r.name}${r.qty>1?' × '+r.qty:''}</span><b>${money(r.total)}</b></div>`).join(''):'<div class="empty">Nenhum item selecionado ainda.</div>';
+  $('itemCount').textContent=count+' '+(count===1?'ITEM':'ITENS');$('subtotal').textContent=money(subtotal);$('grandTotal').textContent=money(subtotal);
+  $('partnerLine').classList.toggle('hidden',activeTab!=='fabrication');$('partnerStatus').textContent=partner?'Ativa':'Sem parceria';
+}
+function setTab(tab){
+  activeTab=tab;document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
+  $('modsPanel').classList.toggle('hidden',tab!=='mods');$('fabricationPanel').classList.toggle('hidden',tab!=='fabrication');updateSummary();
+}
+function resetCurrent(){
+  if(activeTab==='mods'){Object.keys(modSelection).forEach(k=>delete modSelection[k]);$('modsGrid').querySelectorAll('select').forEach(s=>s.value='')}
+  else{Object.keys(fabSelection).forEach(k=>delete fabSelection[k]);renderFab()}
+  updateSummary();
+}
+function invoice(){
+  const rows=getRows(),total=rows.reduce((s,r)=>s+r.total,0),lines=[`RAIJIN • ORÇAMENTO`,activeTab==='mods'?'Categoria: Modificações':'Categoria: Itens'];
+  if(activeTab==='fabrication')lines.push(`Parceria: ${partner?'Sim':'Não'}`);
+  lines.push('',...(rows.length?rows.map(r=>`• ${r.name}${r.qty>1?' (x'+r.qty+')':''} — ${money(r.unit)}${r.qty>1?' cada':''} = ${money(r.total)}`):['Nenhum item selecionado.']),'',`TOTAL: ${money(total)}`);
+  const notes=$('notes').value.trim();if(notes)lines.push('','OBSERVAÇÕES:',notes);return lines.join('\n');
+}
+async function copy(text){try{await navigator.clipboard.writeText(text);toast('Copiado para a área de transferência')}catch(e){const t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();toast('Copiado')}}
+function toast(msg){const el=document.createElement('div');el.className='toast';el.textContent=msg;document.body.appendChild(el);setTimeout(()=>el.remove(),1800)}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.tab)));
+$('partnerToggle').addEventListener('change',e=>{partner=e.target.checked;renderFab();updateSummary()});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-step]');if(!b)return;const i=+b.dataset.index;fabSelection[i]=Math.max(0,(fabSelection[i]||0)+(+b.dataset.step));renderFab();updateSummary()});
+document.addEventListener('change',e=>{if(e.target.matches('[data-qty]')){const i=+e.target.dataset.qty;fabSelection[i]=Math.max(0,Math.floor(Number(e.target.value)||0));renderFab();updateSummary()}});
+$('resetBtn').addEventListener('click',()=>{resetCurrent();$('notes').value=''});
+$('clearTabBtn').addEventListener('click',resetCurrent);
+$('copyBtn').addEventListener('click',()=>copy(invoice()));
+$('invoiceBtn').addEventListener('click',()=>copy(invoice()));
+$('copyTotalBtn').addEventListener('click',()=>copy($('grandTotal').textContent));
+renderMods();renderFab();updateSummary();
+</script>
+</body></html>
