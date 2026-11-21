@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RAIJIN - Fabricacao</title>
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap");
+
+    :root {
+      --background: #090b10;
+      --panel: #11151d;
+      --card: #171d27;
+      --border: #273140;
+      --muted: #8995a7;
+      --text: #edf2f8;
+      --accent: #a855f7;
+      --accent-light: #d8b4fe;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 24px;
+      color: var(--text);
+      font-family: "Inter", sans-serif;
+      background:
+        radial-gradient(circle at top, #2b1740 0, transparent 38%),
+        var(--background);
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .topbar {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2 {
+      margin: 0;
+      font-family: "Barlow Condensed", sans-serif;
+    }
+
+    h1 {
+      margin-top: 6px;
+      font-size: clamp(36px, 7vw, 54px);
+    }
+
+    h2 {
+      font-size: 22px;
+    }
+
+    .back-button,
+    .button {
+      border-radius: 9px;
+      font-size: 12px;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .back-button,
+    .button {
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: var(--card);
+    }
+
+    .back-button {
+      padding: 10px 14px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 380px;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .panel,
+    .summary {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--panel);
+    }
+
+    .panel {
+      padding: 20px;
+    }
+
+    .summary {
+      position: sticky;
+      top: 24px;
+      padding: 20px;
+    }
+
+    .calculation-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .calculation-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 36px;
+      gap: 8px;
+      align-items: end;
+    }
+
+    .calculation-row select,
+    .calculation-row input {
+      min-width: 0;
+    }
+
+    .calculation-actions {
+      margin-top: 12px;
+    }
+
+    .section-heading {
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .section-heading span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .fields,
+    .material-row,
+    .calculation-fields {
+      display: grid;
+      gap: 8px;
+    }
+
+    .fields {
+      grid-template-columns: 2fr 1fr;
+    }
+
+    .calculation-fields {
+      grid-template-columns: 2fr 1fr;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    label {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    input,
+    select {
+      width: 100%;
+      height: 42px;
+      border: 1px solid #303b4b;
+      border-radius: 9px;
+      outline: none;
+      padding: 10px 11px;
+      color: var(--text);
+      background: #0b1017;
+      font-family: "Inter", sans-serif;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.09);
+    }
+
+    .divider {
+      height: 1px;
+      margin: 22px 0;
+      background: var(--border);
+    }
+
+    .material-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .material-row {
+      grid-template-columns: 2fr 1fr 36px;
+      align-items: end;
+    }
+
+    .remove-button {
+      width: 36px;
+      height: 42px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      color: var(--muted);
+      background: #0b1017;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .remove-button:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .button {
+      height: 42px;
+      padding: 0 14px;
+    }
+
+    .button-primary {
+      border-color: var(--accent);
+      color: #170d20;
+      background: var(--accent);
+    }
+
+    .button:disabled {
+      cursor: not-allowed;
+      opacity: 0.45;
+    }
+
+    .actions {
+      margin-top: 12px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .registered-items {
+      margin-top: 22px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .registered-item {
+      padding: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border: 1px solid #222c39;
+      border-radius: 9px;
+      background: #0d1219;
+      font-size: 12px;
+    }
+
+    .registered-item strong {
+      color: var(--accent-light);
+    }
+
+    .registered-item button {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--muted);
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .registered-item button:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .summary-title {
+      margin-bottom: 14px;
+    }
+
+    .summary-empty {
+      padding: 24px 10px;
+      border: 1px dashed #344052;
+      border-radius: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .summary-result {
+      display: grid;
+      gap: 8px;
+    }
+
+    .summary-item {
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      border: 1px solid #222c39;
+      border-radius: 9px;
+      background: #0d1219;
+      font-size: 12px;
+    }
+
+    .summary-item strong {
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    @media (max-width: 760px) {
+      body {
+        padding: 14px;
+      }
+
+      .topbar,
+      .section-heading {
+        align-items: flex-start;
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .summary {
+        position: static;
+      }
+
+      .fields,
+      .calculation-fields,
+      .material-row {
+        grid-template-columns: 1fr 36px;
+      }
+
+      .fields .field:first-child,
+      .calculation-fields .field:first-child {
+        grid-column: 1 / -1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">Calculadora de fabricacao</div>
+        <h1>RAIJIN</h1>
+      </div>
+      <a class="back-button" href="index.html">Voltar ao orçamento</a>
+    </header>
+
+    <main class="layout">
+      <section>
+        <div class="panel">
+          <div class="section-heading">
+            <h2>CADASTRAR ITEM</h2>
+            <span>Máximo de 10 materiais</span>
+          </div>
+
+          <div class="fields">
+            <div class="field">
+              <label for="productName">Nome do item fabricado</label>
+              <input id="productName" type="text" placeholder="Ex.: Motor Stage 3">
+            </div>
+            <div class="field">
+              <label for="productionQuantity">Quantidade produzida</label>
+              <input id="productionQuantity" type="number" min="1" step="1" value="1">
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="section-heading">
+            <h2>MATERIAIS NECESSARIOS</h2>
+          </div>
+
+          <div class="material-list" id="materialList"></div>
+
+          <div class="actions">
+            <button class="button" id="addMaterial" type="button">Adicionar material</button>
+            <button class="button button-primary" id="saveProduct" type="button">Salvar item</button>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:20px">
+          <div class="section-heading">
+            <h2>ITENS CADASTRADOS</h2>
+            <span id="itemCount">0 itens</span>
+          </div>
+          <div class="registered-items" id="registeredItems"></div>
+        </div>
+      </section>
+
+      <aside class="summary">
+          <h2 class="summary-title">CALCULAR FABRICACAO</h2>
+
+          <div class="calculation-list" id="calculationList"></div>
+
+          <div class="calculation-actions">
+            <button class="button" id="addCalculationItem" type="button">Adicionar item</button>
+          </div>
+
+          <div class="divider"></div>
+        <div id="calculationSummary">
+          <div class="summary-empty">Selecione um item para calcular os materiais.</div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script>
+    const storageKey = "raijin-fabrication-items";
+    const maximumMaterials = 10;
+
+    let registeredProducts = loadProducts();
+    let materialCount = 0;
+
+    const materialList = document.getElementById("materialList");
+    const addMaterialButton = document.getElementById("addMaterial");
+    const calculationList = document.getElementById("calculationList");
+
+    function loadProducts() {
+      try {
+        return JSON.parse(localStorage.getItem(storageKey)) || [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function saveProducts() {
+      localStorage.setItem(storageKey, JSON.stringify(registeredProducts));
+    }
+
+    function formatNumber(value) {
+      return Math.round(value).toLocaleString("pt-BR");
+    }
+
+    function createMaterialRow(name = "", quantity = 1) {
+      if (materialList.querySelectorAll(".material-row").length >= maximumMaterials) {
+        return;
+      }
+
+      const row = document.createElement("div");
+      row.className = "material-row";
+      row.innerHTML = `
+        <div class="field">
+          <label>Material</label>
+          <input type="text" class="material-name" placeholder="Nome do material" value="${name}">
+        </div>
+        <div class="field">
+          <label>Quantidade</label>
+          <input type="number" class="material-quantity" min="1" step="1" value="${quantity}">
+        </div>
+        <button class="remove-button" type="button" aria-label="Remover material">×</button>
+      `;
+
+      row.querySelector(".remove-button").addEventListener("click", () => {
+        row.remove();
+        updateMaterialButtons();
+      });
+
+      materialList.appendChild(row);
+      updateMaterialButtons();
+    }
+
+    function updateMaterialButtons() {
+      const count = materialList.querySelectorAll(".material-row").length;
+      addMaterialButton.disabled = count >= maximumMaterials;
+      materialCount = count;
+    }
+
+    function clearForm() {
+      document.getElementById("productName").value = "";
+      document.getElementById("productionQuantity").value = "1";
+      materialList.innerHTML = "";
+      createMaterialRow();
+    }
+
+    function saveProduct() {
+      const name = document.getElementById("productName").value.trim();
+      const productionQuantity = Math.max(
+        1,
+        Math.floor(Number(document.getElementById("productionQuantity").value) || 1)
+      );
+
+      if (!name) {
+        alert("Informe o nome do item fabricado.");
+        return;
+      }
+
+      const materials = [...materialList.querySelectorAll(".material-row")]
+        .map((row) => ({
+          name: row.querySelector(".material-name").value.trim(),
+          quantity: Math.max(
+            1,
+            Math.floor(Number(row.querySelector(".material-quantity").value) || 1)
+          )
+        }))
+        .filter((material) => material.name);
+
+      if (materials.length === 0) {
+        alert("Adicione pelo menos um material.");
+        return;
+      }
+
+      registeredProducts.push({
+        id: Date.now(),
+        name,
+        productionQuantity,
+        materials
+      });
+
+      saveProducts();
+      renderRegisteredProducts();
+      renderProductOptions();
+      clearForm();
+    }
+
+    function removeProduct(id) {
+      registeredProducts = registeredProducts.filter(
+        (product) => product.id !== id
+      );
+      saveProducts();
+      renderRegisteredProducts();
+      renderProductOptions();
+      updateCalculation();
+    }
+
+    function renderRegisteredProducts() {
+      const container = document.getElementById("registeredItems");
+      document.getElementById("itemCount").textContent =
+        `${registeredProducts.length} ${registeredProducts.length === 1 ? "item" : "itens"}`;
+
+      if (registeredProducts.length === 0) {
+        container.innerHTML =
+          '<div class="summary-empty">Nenhum item cadastrado.</div>';
+        return;
+      }
+
+      container.innerHTML = registeredProducts.map((product) => `
+        <div class="registered-item">
+          <div>
+            <strong>${product.name}</strong>
+            <div>${product.productionQuantity} unidade(s) por receita</div>
+          </div>
+          <button type="button" data-remove="${product.id}" aria-label="Excluir ${product.name}">×</button>
+        </div>
+      `).join("");
+
+      container.querySelectorAll("[data-remove]").forEach((button) => {
+        button.addEventListener("click", () => {
+          removeProduct(Number(button.dataset.remove));
+        });
+      });
+    }
+
+    function getProductOptions() {
+      return `
+        <option value="">Selecione um item</option>
+        ${registeredProducts.map((product) =>
+          `<option value="${product.id}">${product.name}</option>`
+        ).join("")}
+      `;
+    }
+
+    function renderProductOptions() {
+      calculationList.querySelectorAll(".calculation-row").forEach((row) => {
+        const select = row.querySelector("select");
+        const previousValue = select.value;
+        select.innerHTML = getProductOptions();
+
+        if (registeredProducts.some((product) => product.id === Number(previousValue))) {
+          select.value = previousValue;
+        }
+      });
+    }
+
+    function createCalculationRow(productId = "", quantity = 1) {
+      const row = document.createElement("div");
+      row.className = "calculation-row";
+      row.innerHTML = `
+        <div class="field">
+          <label>Item cadastrado</label>
+          <select>${getProductOptions()}</select>
+        </div>
+        <div class="field">
+          <label>Quantidade</label>
+          <input type="number" min="1" step="1" value="${quantity}">
+        </div>
+        <button class="remove-button" type="button" aria-label="Remover item">×</button>
+      `;
+
+      const select = row.querySelector("select");
+      const quantityInput = row.querySelector("input");
+
+      if (productId) {
+        select.value = productId;
+      }
+
+      row.querySelector(".remove-button").addEventListener("click", () => {
+        row.remove();
+        if (calculationList.children.length === 0) {
+          createCalculationRow();
+        }
+        updateCalculation();
+      });
+
+      select.addEventListener("change", updateCalculation);
+      quantityInput.addEventListener("input", updateCalculation);
+      calculationList.appendChild(row);
+      updateCalculation();
+    }
+
+    function updateCalculation() {
+      const requiredMaterials = new Map();
+      let hasSelectedProduct = false;
+
+      calculationList.querySelectorAll(".calculation-row").forEach((row) => {
+        const select = row.querySelector("select");
+        const quantityInput = row.querySelector("input");
+        const product = registeredProducts.find(
+          (item) => item.id === Number(select.value)
+        );
+
+        if (!product) return;
+
+        hasSelectedProduct = true;
+        const quantity = Math.max(
+          1,
+          Math.floor(Number(quantityInput.value) || 1)
+        );
+        const factor = quantity / product.productionQuantity;
+
+        product.materials.forEach((material) => {
+          const key = material.name.trim().toLowerCase();
+          const requiredQuantity = Math.ceil(material.quantity * factor);
+          const current = requiredMaterials.get(key);
+
+          if (current) {
+            current.quantity += requiredQuantity;
+          } else {
+            requiredMaterials.set(key, {
+              name: material.name,
+              quantity: requiredQuantity
+            });
+          }
+        });
+      });
+
+      if (!hasSelectedProduct || requiredMaterials.size === 0) {
+        document.getElementById("calculationSummary").innerHTML =
+          '<div class="summary-empty">Selecione um item para calcular os materiais.</div>';
+        return;
+      }
+
+      document.getElementById("calculationSummary").innerHTML = `
+        <div class="summary-result">
+          ${[...requiredMaterials.values()].map((material) => `
+            <div class="summary-item">
+              <span>${material.name}</span>
+              <strong>${formatNumber(material.quantity)} un.</strong>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    addMaterialButton.addEventListener("click", () => createMaterialRow());
+    document.getElementById("saveProduct").addEventListener("click", saveProduct);
+    document.getElementById("addCalculationItem").addEventListener("click", () => {
+      createCalculationRow();
+    });
+
+    createMaterialRow();
+    renderRegisteredProducts();
+    renderProductOptions();
+    createCalculationRow();
+  </script>
+</body>
+</html>
